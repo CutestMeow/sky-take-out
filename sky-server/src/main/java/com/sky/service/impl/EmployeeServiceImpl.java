@@ -114,7 +114,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());
 
         Page<Employee> page = employeeMapper.pageQuery(employeePageQueryDTO);
-        PageResult pageResult =new PageResult(page.getTotal(),page.getResult());
+        PageResult pageResult = new PageResult(page.getTotal(),page.getResult());
         return pageResult;
     }
 
