@@ -21,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
 
@@ -126,6 +127,39 @@ public class EmployeeServiceImpl implements EmployeeService {
 //        employee.setStatus(status);
 //        employee.setId(id);
         Employee employee=Employee.builder().id(id).status(status).build();
+        employeeMapper.update(employee);
+    }
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+    public Employee getById(Long id){
+        Employee employee=employeeMapper.getById(id);
+        employee.setPassword("******");
+        return employee;
+    }
+
+    /**
+     * 编辑员工信息
+     * @param employeeDTO
+     * @return
+     */
+    public void update(EmployeeDTO employeeDTO) {
+//        Employee employee = Employee.builder()
+//                .id(employeeDTO.getId())
+//                .name(employeeDTO.getName())
+//                .phone(employeeDTO.getPhone())
+//                .sex(employeeDTO.getSex())
+//                .idNumber(employeeDTO.getIdNumber())
+//                .username(employeeDTO.getUsername())
+//                .build();
+        Employee employee=new Employee();
+        BeanUtils.copyProperties(employeeDTO,employee);
+        employee.setUpdateTime(LocalDateTime.now());
+        Long empId= BaseContext.getCurrentId();
+        employee.setUpdateUser(empId);
+
         employeeMapper.update(employee);
     }
 }
