@@ -73,7 +73,6 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @param employeeDTO
      * @return
      */
-    @Override
     public void save(EmployeeDTO employeeDTO) {
         Employee employee =new Employee();
 
@@ -117,5 +116,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         PageResult pageResult = new PageResult(page.getTotal(),page.getResult());
         return pageResult;
     }
-
+    /**
+     * 启用、禁用员工账号
+     * @param status,id
+     * @return
+     */
+    public void startOrStop(Integer status,Long id){
+//        Employee employee = new Employee();
+//        employee.setStatus(status);
+//        employee.setId(id);
+        Employee employee=Employee.builder().id(id).status(status).build();
+        employeeMapper.update(employee);
+    }
 }
