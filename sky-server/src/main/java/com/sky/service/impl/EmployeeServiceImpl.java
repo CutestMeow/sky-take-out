@@ -98,13 +98,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setStatus(StatusConstant.ENABLE);
 
         //设置创建时间和编辑时间
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
 
         //设置当前记录创建人id和修改人id
-        Long empId= BaseContext.getCurrentId();
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+//        Long empId= BaseContext.getCurrentId();
+//        employee.setCreateUser(empId);
+//        employee.setUpdateUser(empId);
 
         employeeMapper.insert(employee);
     }
@@ -165,9 +165,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 //                .build();
         Employee employee=new Employee();
         BeanUtils.copyProperties(employeeDTO,employee);
-        employee.setUpdateTime(LocalDateTime.now());
-        Long empId= BaseContext.getCurrentId();
-        employee.setUpdateUser(empId);
+//        employee.setUpdateTime(LocalDateTime.now());
+//        Long empId= BaseContext.getCurrentId();
+//        employee.setUpdateUser(empId);
 
         employeeMapper.update(employee);
     }
