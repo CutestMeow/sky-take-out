@@ -2,9 +2,11 @@ package com.sky.controller.admin;
 
 import com.github.pagehelper.Page;
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
 import com.sky.result.PageResult;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.sky.context.BaseContext.getCurrentId;
 
 /**
  * 员工管理
@@ -137,4 +141,19 @@ public class EmployeeController {
         employeeService.update(employeeDTO);
         return Result.success();
     }
+    /**
+     * 修改密码
+     * @param passwordEditDTO
+     * @return
+     */
+    @PutMapping("/editPassword")
+    @ApiOperation("修改密码")
+    public Result editPassword(@RequestBody PasswordEditDTO passwordEditDTO) {
+        passwordEditDTO.setEmpId(BaseContext.getCurrentId());
+//        log.info(BaseContext.getCurrentId().toString());
+        log.info("修改员工信息，id为{}",BaseContext.getCurrentId().toString());
+        employeeService.editPassword(passwordEditDTO);
+        return Result.success();
+    }
+
 }
