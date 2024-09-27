@@ -6,7 +6,6 @@ import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.result.PageResult;
-import org.springframework.web.bind.annotation.GetMapping;
 
 public interface EmployeeService {
 

@@ -112,7 +112,7 @@ public class EmployeeController {
      */
     @PostMapping("/status/{status}")
     @ApiOperation("启用、禁用员工账号")
-    public Result startOrStop(@PathVariable Integer status,Long id) {
+    public Result<String> startOrStop(@PathVariable Integer status,Long id) {
         log.info("启用、禁用员工账号，id：{}，status：{}", id,status);
         employeeService.startOrStop(status,id);
         return Result.success();
@@ -136,7 +136,7 @@ public class EmployeeController {
      */
     @PutMapping
     @ApiOperation("编辑员工信息")
-    public Result update(@RequestBody EmployeeDTO employeeDTO) {
+    public Result<String> update(@RequestBody EmployeeDTO employeeDTO) {
         log.info("编辑员工信息：{}", employeeDTO);
         employeeService.update(employeeDTO);
         return Result.success();
@@ -148,7 +148,7 @@ public class EmployeeController {
      */
     @PutMapping("/editPassword")
     @ApiOperation("修改密码")
-    public Result editPassword(@RequestBody PasswordEditDTO passwordEditDTO) {
+    public Result<String> editPassword(@RequestBody PasswordEditDTO passwordEditDTO) {
         passwordEditDTO.setEmpId(BaseContext.getCurrentId());
 //        log.info(BaseContext.getCurrentId().toString());
         log.info("修改员工信息，id为{}",BaseContext.getCurrentId().toString());
