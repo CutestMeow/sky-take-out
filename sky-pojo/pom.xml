@@ -20,6 +20,11 @@
             <version>2.9.2</version>
         </dependency>
         <dependency>
+            <groupId>com.huaweicloud</groupId>
+            <artifactId>esdk-obs-java</artifactId>
+            <version>3.23.9</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
         </dependency>

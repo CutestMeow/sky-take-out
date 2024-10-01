@@ -1,6 +1,7 @@
 server:
   port: 8080
-
+url:
+  F:\Studies\Graduates\JavaStudies\sky-take-out\sky-server\src\main\resources\static\PictureResources
 spring:
   profiles:
     active: dev
@@ -12,6 +13,12 @@ spring:
       url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
+
+
+  web:
+    resources:
+      static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/PictureResources/,file:${url}
+
 #  servlet:
 #    multipart:
 #      max-file-size: 10MB
@@ -41,3 +48,8 @@ sky:
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+  huawei:
+    endpoint:${sky.huawei.endpoint}
+    access-key-id:${sky.huawei.access-key-id}
+    access-key-secret:${sky.huawei.access-key-secret}
+    bucket-name:${sky.huawei.bucket-name}
