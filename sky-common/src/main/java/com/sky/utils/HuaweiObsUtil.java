@@ -49,7 +49,7 @@ public class HuaweiObsUtil {
             System.out.println("Error Code:" + oe.getErrorCode());
         } catch (Exception e) {
             System.out.println("Caught an ClientException, which means the client encountered "
-                    + "a serious internal problem while trying to communicate with OSS, "
+                    + "a serious internal problem while trying to communicate with OBS, "
                     + "such as not being able to access the network.");
             System.out.println("Error Message:" + e.getMessage());
         } finally {
