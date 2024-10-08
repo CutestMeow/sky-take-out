@@ -6,4 +6,13 @@
             insert into dish_flavor(dish_id, name, value) VALUES
                                     (#{dishId},#{name},#{value})
 </insert>
+    <delete id="deleteFlavorByDishIds">
+        delete from dish_flavor where dish_id in
+                                <foreach collection="dishIds" open="(" close=")" separator="," item="dishId">
+                                    #{dishId}
+                                </foreach>
+    </delete>
+    <select id="getDishFlavorsByDishId" resultType="com.sky.entity.DishFlavor">
+        select * from dish_flavor where dish_id = #{dishId}
+    </select>
 </mapper>
