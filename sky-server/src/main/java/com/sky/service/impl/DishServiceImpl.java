@@ -140,6 +140,7 @@ public class DishServiceImpl implements DishService {
      * @return
      */
     @Transactional
+    @Override
     public void statusChange(Integer status,Long id){
         Dish dish = Dish.builder().status(status).id(id).build();
         dishMapper.update(dish);
@@ -160,6 +161,7 @@ public class DishServiceImpl implements DishService {
      * @param categoryId
      * @return
      */
+    @Override
     public List<Dish> getByCategoryId(Long categoryId){
         List<Dish> dishList=dishMapper.getByCategoryId(categoryId);
         return dishList;
