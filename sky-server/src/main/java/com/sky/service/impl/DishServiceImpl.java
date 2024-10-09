@@ -24,10 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -142,9 +139,20 @@ public class DishServiceImpl implements DishService {
      * @param status,id
      * @return
      */
+    @Transactional
     public void statusChange(Integer status,Long id){
-        Dish dish = dishMapper.getById(id);
-        dish.setStatus(status);
+        Dish dish = Dish.builder().status(status).id(id).build();
         dishMapper.update(dish);
+        if(status.equals(StatusConstant.DISABLE)){
+            List<Long> dishIdList=new ArrayList<>();
+            dishIdList.add(id);
+            List<Long> setmealIdList=setmealDishMapper.getSetmealsByDishIds(dishIdList);
+            if(setmealIdList!=null&&setmealIdList.size()>0){
+                for(Long setmealId : setmealIdList) {
+                    Setmeal setmeal = Setmeal.builder().id(setmealId).status(StatusConstant.DISABLE).build();
+                    setmealMapper.update(setmeal);
+                }
+            }
+        }
     }
 }
