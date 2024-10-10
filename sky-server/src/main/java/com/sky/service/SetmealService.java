@@ -6,6 +6,8 @@ import com.sky.entity.Setmeal;
 import com.sky.result.PageResult;
 import com.sky.vo.SetmealVO;
 
+import java.util.List;
+
 public interface SetmealService {
 
     /**
@@ -42,4 +44,11 @@ public interface SetmealService {
      * @return
      */
     void statusChange(Integer status,Long id);
+
+    /**
+     * 批量删除套餐
+     * @params ids
+     * @return
+     */
+    void delete(List<Long> ids);
 }

@@ -9,6 +9,7 @@ import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
+import com.sky.exception.DeletionNotAllowedException;
 import com.sky.exception.SetmealEnableFailedException;
 import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
@@ -70,10 +71,19 @@ public class SetmealServiceImpl implements SetmealService {
      * @return
      */
     @Override
+    @Transactional
     public void update(SetmealDTO setmealDTO) {
         Setmeal setmeal = new Setmeal();
         BeanUtils.copyProperties(setmealDTO, setmeal);
         setmealMapper.update(setmeal);
+
+        Long setmealId=setmeal.getId();
+        setmealDishMapper.deleteBySetmealId(setmealId);
+        List<SetmealDish> setmealDishList = setmealDTO.getSetmealDishes();
+        for (SetmealDish setmealDish : setmealDishList) {
+            setmealDish.setSetmealId(setmeal.getId());
+        }
+        setmealDishMapper.save(setmealDishList);
     }
     /**
      * 根据id查询套餐
@@ -113,5 +123,27 @@ public class SetmealServiceImpl implements SetmealService {
         Setmeal setmeal= Setmeal.builder().status(status).id(id).build();
         setmealMapper.update(setmeal);
     }
+    /**
+     * 批量删除套餐
+     * @params ids
+     * @return
+     */
+    @Override
+    @Transactional
+    public void delete(List<Long> ids){
+        if(ids!=null&&ids.size()>0){
+            List<Long> deleteIds=new ArrayList<>();
+            for(Long id:ids){
+                if(setmealMapper.statusCheck(id).equals(StatusConstant.ENABLE)){
+                    throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ON_SALE);
+                }
+                deleteIds.add(id);
+            }
+            setmealMapper.delete(deleteIds);
+            for(Long deleteId:deleteIds){
+                setmealDishMapper.deleteBySetmealId(deleteId);
+            }
+        }
 
+    }
 }
